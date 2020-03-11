@@ -1,10 +1,10 @@
-package Dominio;
+package Dominio.Pieza;
 
 public class Caballo extends Pieza {
 
     public Caballo() {
         nombre = this.getClass().getName();
-        imagen = "/imagenes/caballo.png";
+        imagen = "/Presentacion/Imagenes/caballo.png";
         movx = new int[8];
         movy = new int[8];
         int pos = 0;

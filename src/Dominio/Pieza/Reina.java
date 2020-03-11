@@ -1,10 +1,10 @@
-package Dominio;
+package Dominio.Pieza;
 
 public class Reina extends Pieza {
 
     public Reina() {
         afectadimension = true; //se mueve en dimensión tablero
-        imagen = "/imagenes/reina.png";
+        imagen = "/Presentacion/Imagenes/reina.png";
         movx = new int[0];
         movy = new int[0];
         nombre = this.getClass().getName();
@@ -13,7 +13,7 @@ public class Reina extends Pieza {
     public Reina(int d) {
         afectadimension = true; //se mueve en dimensión tablero
         nombre = this.getClass().getName();
-        imagen = "/imagenes/reina.png";
+        imagen = "/Presentacion/Imagenes/reina.png";
         movx = new int[(d-1)*4*2];
         movy = new int[(d-1)*4*2];
         int pos = 0;

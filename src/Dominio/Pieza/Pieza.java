@@ -1,4 +1,4 @@
-package Dominio;
+package Dominio.Pieza;
 
 public abstract class Pieza {
     protected int movx[];
