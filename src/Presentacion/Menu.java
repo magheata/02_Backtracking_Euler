@@ -10,9 +10,9 @@ public class Menu extends JPanel {
 
 
     public Menu(){
-        reinaBtn = new JButton("Reina");
-        caballoBtn = new JButton("Caballo");
-        peonBtn = new JButton("Peon");
+        reinaBtn = new JButton();
+        caballoBtn = new JButton();
+        peonBtn = new JButton();
         reinaBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/reina56.png"))); // NOI18N
         caballoBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/caballo56.png"))); // NOI18N
         peonBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/peon56.png"))); // NOI18N
