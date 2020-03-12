@@ -1,10 +1,12 @@
 package Dominio.Pieza;
 
+import Dominio.Imagen;
+
 public abstract class Pieza {
     protected int movx[];
     protected int movy[];
     protected String nombre;
-    protected String imagen;
+    protected Imagen imagen;
     protected boolean afectadimension = false;
 
     public boolean afectaDimension() {
@@ -15,7 +17,7 @@ public abstract class Pieza {
         return nombre;
     }
 
-    public String getImagen() {
+    public Imagen getImagen() {
         return imagen;
     }
 

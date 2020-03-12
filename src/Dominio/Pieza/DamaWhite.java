@@ -2,10 +2,9 @@ package Dominio.Pieza;
 
 import Dominio.Imagen;
 
-public class Peon extends Pieza{
-
-    public Peon(){
-        imagen = new Imagen("/Presentacion/Imagenes/peon.png");
+public class DamaWhite extends Pieza{
+    public DamaWhite(){
+        imagen = new Imagen("/Presentacion/Imagenes/dama_white.png");
         movx = new int[1];
         movy = new int[1];
         int pos = 0;

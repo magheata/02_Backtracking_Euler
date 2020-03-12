@@ -1,13 +1,14 @@
 package Presentacion;
 
+import Aplicacion.BTController;
+import Dominio.Datos;
+
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VentanaInicial extends JFrame {
-    private static final int SIZEPANEL = 660;
     private JButton peonButton;
     private JButton caballoButton;
     private JButton reinaButton;
@@ -101,6 +102,7 @@ public class VentanaInicial extends JFrame {
                 //errorLabel.setText("El valor introducido está fuera de rango");
             } else {
                 Ventana m = new Ventana("Euler", tamanyo);
+                BTController controller = new BTController(m);
                 m.setVisible(true);
                 this.setVisible(false);
             }
@@ -128,5 +130,9 @@ public class VentanaInicial extends JFrame {
             dimensionesTextField.setText(Integer.toString(numero));
             dimensionesTextField.setEditable(false);
         }
+    }
+
+    public String GetDimensions(){
+        return dimensionesTextField.getText();
     }
 }
