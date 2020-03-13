@@ -1,7 +1,6 @@
 package Presentacion;
 
 import Aplicacion.BTController;
-import Dominio.Datos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,15 +11,19 @@ public class VentanaInicial extends JFrame {
     private JButton peonButton;
     private JButton caballoButton;
     private JButton reinaButton;
-    private JButton peonBlancoButton;
-    private JButton damasButton;
-    private JButton damasBlancoButton;
+    private JButton peonWhiteButton;
+    private JButton damaButton;
+    private JButton damaWhiteButton;
     private JButton startButton;
     private JButton decrDimensionButton;
     private JTextField dimensionesTextField;
     private JButton incrDimensionButton;
     private JPanel mainPanel;
-    private JButton[] botones = {peonButton, caballoButton, reinaButton, peonBlancoButton, damasButton, damasBlancoButton};
+    private JButton[] botones = {peonButton, caballoButton, reinaButton, peonWhiteButton, damaButton, damaWhiteButton};
+    private String[] botonesImg = {"peon56.png", "caballo56.png", "reina56.png", "peonwhite56.png", "damas56.png",
+            "damaswhite56.png"};
+    private int selectedButton = 0;
+    private String imagesPath = "/Presentacion/Imagenes/";
 
     public VentanaInicial() {
         initComponents();
@@ -31,18 +34,11 @@ public class VentanaInicial extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         activarButton(peonButton);
-        desactivarBoton(peonBlancoButton);
+        desactivarBoton(peonWhiteButton);
         desactivarBoton(reinaButton);
         desactivarBoton(caballoButton);
-        desactivarBoton(damasButton);
-        desactivarBoton(damasBlancoButton);
-
-        reinaButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/reina56.png"))); // NOI18N
-        caballoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/caballo56.png"))); // NOI18N
-        peonButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/peon56.png"))); // NOI18N
-        peonBlancoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/peon_white56.png"))); // NOI18N
-        damasBlancoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/damas_white56.png"))); // NOI18N
-        damasButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/damas56.png"))); // NOI18N
+        desactivarBoton(damaButton);
+        desactivarBoton(damaWhiteButton);
 
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -64,21 +60,19 @@ public class VentanaInicial extends JFrame {
         });
 
         for (int i = 0; i < botones.length; i++){
-            botones[i].addActionListener(new BotonPiezaActionListener());
-        }
-    }
-
-    class BotonPiezaActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Object source = e.getSource();
-            for(int i = 0; i < botones.length; i++){
-                if(botones[i] == source){
-                    activarButton(botones[i]);
-                } else {
-                    desactivarBoton(botones[i]);
+            JButton boton = botones[i];
+            boton.setIcon(new javax.swing.ImageIcon(getClass().getResource(imagesPath.concat(botonesImg[i]))));
+            boton.addActionListener(e -> {
+                Object source = e.getSource();
+                for(int i1 = 0; i1 < botones.length; i1++){
+                    if(botones[i1] == source){
+                        activarButton(botones[i1]);
+                        selectedButton = i1;
+                    } else {
+                        desactivarBoton(botones[i1]);
+                    }
                 }
-            }
+            });
         }
     }
 
@@ -95,17 +89,12 @@ public class VentanaInicial extends JFrame {
     }
 
     private void startActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
         try {
             int tamanyo = Integer.parseInt(dimensionesTextField.getText());
-            if (tamanyo < 3 || tamanyo > 20) {
-                //errorLabel.setText("El valor introducido está fuera de rango");
-            } else {
-                Ventana m = new Ventana("Euler", tamanyo);
-                BTController controller = new BTController(m);
-                m.setVisible(true);
-                this.setVisible(false);
-            }
+            BTController controller = new BTController();
+            Ventana m = new Ventana(controller, "Euler", tamanyo, selectedButton);
+            m.setVisible(true);
+            this.setVisible(false);
         } catch (HeadlessException | NumberFormatException e) {
             //errorLabel.setText("El valor introducido no es un número");
         }

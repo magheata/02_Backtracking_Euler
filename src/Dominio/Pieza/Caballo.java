@@ -6,7 +6,7 @@ public class Caballo extends Pieza {
 
     public Caballo() {
         nombre = this.getClass().getName();
-        imagen = new Imagen("/Presentacion/Imagenes/caballo.png");
+        imagen = new Imagen("src/Presentacion/Imagenes/caballo77.png");
         movx = new int[8];
         movy = new int[8];
         int pos = 0;

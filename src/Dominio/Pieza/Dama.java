@@ -4,7 +4,8 @@ import Dominio.Imagen;
 
 public class Dama extends Pieza{
     public Dama(){
-        imagen = new Imagen("/Presentacion/Imagenes/dama.png");
+        nombre = this.getClass().getName();
+        imagen = new Imagen("src/Presentacion/Imagenes/damas77.png");
         movx = new int[1];
         movy = new int[1];
         int pos = 0;

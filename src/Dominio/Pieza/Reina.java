@@ -6,7 +6,7 @@ public class Reina extends Pieza {
 
     public Reina() {
         afectadimension = true; //se mueve en dimensión tablero
-        imagen = new Imagen("/Presentacion/Imagenes/reina.png");
+        imagen = new Imagen("src/Presentacion/Imagenes/reina77.png");
         movx = new int[0];
         movy = new int[0];
         nombre = this.getClass().getName();
@@ -15,7 +15,7 @@ public class Reina extends Pieza {
     public Reina(int d) {
         afectadimension = true; //se mueve en dimensión tablero
         nombre = this.getClass().getName();
-        imagen = new Imagen("/Presentacion/Imagenes/reina.png");
+        imagen = new Imagen("src/Presentacion/Imagenes/reina77.png");
         movx = new int[(d-1)*4*2];
         movy = new int[(d-1)*4*2];
         int pos = 0;

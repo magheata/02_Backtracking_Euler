@@ -8,7 +8,6 @@ import java.io.IOException;
 
 public class Imagen {
     private BufferedImage img;
-    private static final int TAMIMG = 256;
 
     /**
      * Consntructor de la clase que genera la imagen

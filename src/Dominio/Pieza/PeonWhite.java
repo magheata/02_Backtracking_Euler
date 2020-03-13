@@ -4,7 +4,8 @@ import Dominio.Imagen;
 
 public class PeonWhite extends Pieza{
     public PeonWhite(){
-        imagen = new Imagen("/Presentacion/Imagenes/peon_white.png");
+        nombre = this.getClass().getName();
+        imagen = new Imagen("src/Presentacion/Imagenes/peonwhite77.png");
         movx = new int[1];
         movy = new int[1];
         int pos = 0;
