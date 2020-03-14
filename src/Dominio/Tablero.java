@@ -19,7 +19,7 @@ public class Tablero {
         tablero = new Casilla[dimension][dimension];
         for (int i = 0; i < dimension; i++){
             for (int j = 0; j < dimension; j++){
-                tablero[i][j] = new Casilla(i, j);
+                tablero[i][j] = new Casilla(i,j);
             }
         }
     }
@@ -76,4 +76,6 @@ public class Tablero {
     public int getMovY(int i) {
         return pieza.getMovY(i);
     }
+
+    public Casilla getCasilla(int x , int y) {return tablero[x][y];}
 }

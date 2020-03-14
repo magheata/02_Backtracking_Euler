@@ -32,4 +32,6 @@ public abstract class Pieza {
     public int getMovY(int i) {
         return movy[i];
     }
+
+    public int getNumMov() {return movx.length;}
 }
