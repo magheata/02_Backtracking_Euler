@@ -4,8 +4,6 @@ import Aplicacion.BTController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PanelControl extends JPanel {
 
@@ -13,6 +11,9 @@ public class PanelControl extends JPanel {
     private JProgressBar progressBar;
     private BTController controller;
     private int dimension;
+
+    private boolean dimensionModificada = false;
+
     public PanelControl(BTController controller, int dimension){
         this.controller = controller;
         this.dimension = dimension;
@@ -31,36 +32,33 @@ public class PanelControl extends JPanel {
 
         progressBar = new JProgressBar();
 
-        incrDimensionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ButtonMasAgentesActionPerformed(e);
-                controller.modificarDimensionesTablero(dimension);
+        incrDimensionButton.addActionListener(e -> {
+            ButtonMasAgentesActionPerformed();
+            if (dimensionModificada){
+                controller.modificarDimensionesTablero(dimension, false);
             }
         });
 
-        decrDimensionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ButtonMenosAgentesActionPerformed(e);
-                controller.modificarDimensionesTablero(dimension);
+        decrDimensionButton.addActionListener(e -> {
+            ButtonMenosAgentesActionPerformed();
+            if (dimensionModificada){
+                controller.modificarDimensionesTablero(dimension, true);
             }
         });
 
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (startButton.getText() == "Start"){
-                    incrDimensionButton.setEnabled(false);
-                    decrDimensionButton.setEnabled(false);
-                    startButton.setText("Stop");
-                    controller.startBacktrackingProcess();
-                } else {
-                    startButton.setText("Start");
-                    incrDimensionButton.setEnabled(true);
-                    decrDimensionButton.setEnabled(true);
-                }
+        startButton.addActionListener(e -> {
+            if (startButton.getText() == "Start"){
+                incrDimensionButton.setEnabled(false);
+                decrDimensionButton.setEnabled(false);
+                startButton.setText("Stop");
+                controller.startBacktrackingProcess();
+            } else {
+                startButton.setText("Start");
+                incrDimensionButton.setEnabled(true);
+                decrDimensionButton.setEnabled(true);
             }
+            controller.modificarAccesoBotones();
+            controller.modificarAccesoTablero();
         });
 
         this.add(decrDimensionButton);
@@ -68,16 +66,22 @@ public class PanelControl extends JPanel {
         this.add(startButton);
         this.add(progressBar);
     }
-    private void ButtonMenosAgentesActionPerformed(ActionEvent evt) {
+    private void ButtonMenosAgentesActionPerformed() {
         // TODO add your handling code here:
         if (!(dimension <= 5)) {
             dimension--;
+            dimensionModificada = true;
+        } else {
+            dimensionModificada = false;
         }
     }
 
-    private void ButtonMasAgentesActionPerformed(ActionEvent evt) {
+    private void ButtonMasAgentesActionPerformed() {
         if (!(dimension >= 15)) {
             dimension++;
+            dimensionModificada = true;
+        } else {
+            dimensionModificada = false;
         }
     }
 }

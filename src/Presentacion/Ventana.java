@@ -15,9 +15,12 @@ public class Ventana extends JFrame {
 
         Tablero tablero = new Tablero(controller, dimension, botonSeleccionado);
         controller.setTableroPresentacion(tablero);
+
         Menu menu = new Menu(controller, botonSeleccionado);
+        controller.setMenu(menu);
 
         PanelControl panelControl = new PanelControl(controller, dimension);
+        controller.setPanelControl(panelControl);
 
         panelNorth.add(panelControl, BorderLayout.NORTH);
         panelNorth.add(menu, BorderLayout.SOUTH);

@@ -5,13 +5,17 @@ import Dominio.Interfaz.IController;
 import Dominio.Pieza.Pieza;
 import Dominio.PiezasTablero;
 import Infraestructura.Backtracking;
+import Presentacion.Menu;
+import Presentacion.PanelControl;
 import Presentacion.Tablero;
 
 public class BTController implements IController {
 
     private Dominio.Tablero tableroDominio;
     private Tablero tableroPresentacion;
+    private Menu menu;
     private Backtracking backtracking;
+    private PanelControl panelControl;
     private String piezaSeleccionada = "";
     private String piezasPath = "Dominio.Pieza";
 
@@ -31,16 +35,16 @@ public class BTController implements IController {
         }
     }
 
-    public void setBacktracking(Backtracking backtracking) {
-        this.backtracking = backtracking;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
-    public Tablero getTableroPresentacion() {
-        return tableroPresentacion;
+    public void setPanelControl(PanelControl panelControl) {
+        this.panelControl = panelControl;
     }
 
-    public void modificarDimensionesTablero(int nuevasDimensiones){
-        tableroPresentacion.actualizarDimensiones(nuevasDimensiones);
+    public void modificarDimensionesTablero(int nuevasDimensiones, boolean incrementar){
+        tableroPresentacion.actualizarDimensiones(nuevasDimensiones, incrementar);
     }
 
     @Override
@@ -66,5 +70,15 @@ public class BTController implements IController {
     @Override
     public Pieza pintarPieza() {
         return null;
+    }
+
+    @Override
+    public void modificarAccesoBotones() {
+        menu.modificarAccesoBotones();
+    }
+
+    @Override
+    public void modificarAccesoTablero() {
+        tableroPresentacion.setTableroHabilitado(!tableroPresentacion.isTableroHabilitado());
     }
 }

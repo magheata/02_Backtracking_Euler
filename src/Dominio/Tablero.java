@@ -33,10 +33,6 @@ public class Tablero {
         return dimension;
     }
 
-    public void setDimension(int dimension) {
-        this.dimension = dimension;
-    }
-
     public Pieza getPieza() {
         return pieza;
     }
@@ -53,24 +49,8 @@ public class Tablero {
         }
     }
 
-    public Pieza getClasePieza() {
-        return pieza;
-    }
-
     public Imagen getImagen() {
         return pieza.getImagen();
-    }
-
-    public int getNumMovs() {
-        return pieza.getNumMovs();
-    }
-
-    public int getMovX(int i) {
-        return pieza.getMovX(i);
-    }
-
-    public int getMovY(int i) {
-        return pieza.getMovY(i);
     }
 
     public Casilla getCasilla(int x , int y) {return tablero[x][y];}

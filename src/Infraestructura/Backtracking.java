@@ -31,7 +31,10 @@ public class Backtracking {
                 yt = y + t.getPieza().getMovY(i);
                 if (!t.getCasilla(xt, yt).isVisitada()) {
                     v++;
+                    // controller.pintarPieza(x, y);
                     mover(t, xt, yt,v);
+
+                    //pintar anterior
                 }
             }
         }

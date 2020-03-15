@@ -9,4 +9,6 @@ public interface IController {
     void crearDominioTablero(int dimension, int piezaSeleccionada);
     void startBacktrackingProcess();
     Pieza pintarPieza();
+    void modificarAccesoBotones();
+    void modificarAccesoTablero();
 }
