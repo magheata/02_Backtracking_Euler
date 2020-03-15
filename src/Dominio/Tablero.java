@@ -1,6 +1,5 @@
 package Dominio;
 
-import Dominio.Pieza.Peon;
 import Dominio.Pieza.Pieza;
 
 import java.awt.*;
@@ -28,11 +27,6 @@ public class Tablero {
 
     public void setInicioPieza(long x, long y){
         this.inicioPieza = new Casilla(x, y, new Color(0, 0, 0));
-    }
-
-    public void regenerar(int d) {
-        dimension = d;
-        //setClasePieza(pieza.getNombre());
     }
 
     public int getDimension() {

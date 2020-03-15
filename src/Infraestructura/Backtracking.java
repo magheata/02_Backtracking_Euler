@@ -1,9 +1,16 @@
 package Infraestructura;
 
+import Aplicacion.BTController;
 import Dominio.Tablero;
 
 public class Backtracking {
+
+    private BTController controller;
     private int casillasRecorridas = 0;
+
+    public Backtracking(BTController controller){
+        this.controller = controller;
+    }
 
     public void BT(Tablero t, int x, int y){
         mover(t,x,y, casillasRecorridas);

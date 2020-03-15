@@ -1,14 +1,11 @@
 package Presentacion;
 
 import Aplicacion.BTController;
-import Dominio.Interfaz.IGraphicsService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class PanelControl extends JPanel {
 
@@ -57,6 +54,7 @@ public class PanelControl extends JPanel {
                     incrDimensionButton.setEnabled(false);
                     decrDimensionButton.setEnabled(false);
                     startButton.setText("Stop");
+                    controller.startBacktrackingProcess();
                 } else {
                     startButton.setText("Start");
                     incrDimensionButton.setEnabled(true);

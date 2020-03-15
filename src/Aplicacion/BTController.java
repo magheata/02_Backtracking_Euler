@@ -1,41 +1,25 @@
 package Aplicacion;
 
+import Dominio.Imagen;
+import Dominio.Interfaz.IController;
+import Dominio.Pieza.Pieza;
 import Dominio.PiezasTablero;
+import Infraestructura.Backtracking;
 import Presentacion.Tablero;
 
-public class BTController {
+public class BTController implements IController {
 
     private Dominio.Tablero tableroDominio;
-    private String piezaSeleccionada = "";
-
-    public Tablero getTableroPresentacion() {
-        return tableroPresentacion;
-    }
-
-    public void setTableroPresentacion(Tablero tableroPresentacion) {
-        this.tableroPresentacion = tableroPresentacion;
-    }
-
     private Tablero tableroPresentacion;
+    private Backtracking backtracking;
+    private String piezaSeleccionada = "";
     private String piezasPath = "Dominio.Pieza";
 
-    public BTController() {
-    }
+    public BTController() {}
 
-    public Dominio.Tablero getTableroDominio() {
-        return tableroDominio;
-    }
-
-    public void setTableroDominio(Dominio.Tablero tableroDominio) {
-        this.tableroDominio = tableroDominio;
-    }
-
-    public String getPiezaSeleccionada() {
-        return piezaSeleccionada;
-    }
-
-    public void setPiezaSeleccionada(String piezaSeleccionada) {
-        this.piezaSeleccionada = piezaSeleccionada;
+    // GETTERS AND SETTERS
+    public void setTableroPresentacion(Tablero tableroPresentacion) {
+        this.tableroPresentacion = tableroPresentacion;
     }
 
     public void setPiezaSeleccionada(int pieza){
@@ -47,7 +31,40 @@ public class BTController {
         }
     }
 
+    public void setBacktracking(Backtracking backtracking) {
+        this.backtracking = backtracking;
+    }
+
+    public Tablero getTableroPresentacion() {
+        return tableroPresentacion;
+    }
+
     public void modificarDimensionesTablero(int nuevasDimensiones){
         tableroPresentacion.actualizarDimensiones(nuevasDimensiones);
+    }
+
+    @Override
+    public void setInicioPieza(long x, long y) {
+        tableroDominio.setInicioPieza(x, y);
+    }
+
+    @Override
+    public Imagen getImagenPiezaSeleccionada() {
+        return tableroDominio.getImagen();
+    }
+
+    @Override
+    public void crearDominioTablero(int dimension, int piezaSeleccionada) {
+        tableroDominio = new Dominio.Tablero(dimension, piezaSeleccionada);
+    }
+
+    @Override
+    public void startBacktrackingProcess() {
+        this.backtracking = new Backtracking(this);
+    }
+
+    @Override
+    public Pieza pintarPieza() {
+        return null;
     }
 }
