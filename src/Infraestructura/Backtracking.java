@@ -18,7 +18,7 @@ public class Backtracking {
 
     public void BT(Tablero tablero, int x, int y){
         tamaño= (int) Math.pow(tablero.getDimension(), 2);
-        mover(tablero, x, y, casillasRecorridas);
+        mover(x, y, casillasRecorridas);
         if (casillasRecorridas == tamaño) {
             controller.finalizacion("Hemos encontrado una solución");
         } else {
@@ -26,7 +26,7 @@ public class Backtracking {
         }
     }
 
-    private void mover(Tablero tablero, int x, int y, int visitada) {
+    private void mover(int x, int y, int visitada) {
         // x e y temporales
         int xt = 0;
         int yt = 0;
@@ -34,13 +34,18 @@ public class Backtracking {
             for (int i = 0; i < tablero.getPieza().getNumMovs(); i++) {
                 xt = x + tablero.getPieza().getMovX(i);
                 yt = y + tablero.getPieza().getMovY(i);
-                if (isMovimientoValido(tablero, xt, yt)){
+                if (isMovimientoValido(xt, yt)){
                     if (!tablero.getCasilla(xt, yt).isVisitada()) {
                         controller.pintarPieza(xt, yt,0);
+                        try{
+                            Thread.sleep(1000);
+                        } catch(Exception ex){
+
+                        }
                         controller.pintarPieza(x, y, visitada);
                         tablero.getCasilla(xt, yt).setVisitada(true);
                         visitada++;
-                        mover(tablero, xt, yt,visitada);
+                        mover(xt, yt,visitada);
                         if(visitada!=tamaño){
                             visitada--;
                             tablero.getCasilla(xt, yt).setVisitada(false);
@@ -53,7 +58,7 @@ public class Backtracking {
         }
     }
 
-    private boolean isMovimientoValido(Tablero tablero, int x, int y){
+    private boolean isMovimientoValido(int x, int y){
         return x < tablero.getDimension() && x >= 0 && y < tablero.getDimension() && y >= 0;
     }
 }

@@ -24,6 +24,8 @@ public class VentanaInicial extends JFrame {
             "damaswhite56.png"};
     private int selectedButton = 0;
     private String imagesPath = "/Presentacion/Imagenes/";
+    private final int MIN_DIMENSION = 5;
+    private final int MAX_DIMENSION = 10;
 
     public VentanaInicial() {
         initComponents();
@@ -104,7 +106,7 @@ public class VentanaInicial extends JFrame {
     private void ButtonMenosAgentesActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
         int numero = Integer.parseInt(dimensionesTextField.getText());
-        if (!(numero <= 5)) {
+        if (!(numero <= MIN_DIMENSION)) {
             numero--;
             dimensionesTextField.setEditable(true);
             dimensionesTextField.setText(Integer.toString(numero));
@@ -114,7 +116,7 @@ public class VentanaInicial extends JFrame {
 
     private void ButtonMasAgentesActionPerformed(ActionEvent evt) {
         int numero = Integer.parseInt(dimensionesTextField.getText());
-        if (!(numero >= 15)) {
+        if (!(numero >= MAX_DIMENSION)) {
             numero++;
             dimensionesTextField.setEditable(true);
             dimensionesTextField.setText(Integer.toString(numero));
