@@ -27,6 +27,11 @@ public class Tablero {
 
     public void setInicioPieza(long x, long y){
         this.inicioPieza = new Casilla(x, y, new Color(0, 0, 0));
+        this.tablero[(int)x][(int)y].setVisitada(true);
+    }
+
+    public Casilla getInicioPieza() {
+        return inicioPieza;
     }
 
     public int getDimension() {

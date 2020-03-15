@@ -19,7 +19,6 @@ public class VentanaInicial extends JFrame {
     private JTextField dimensionesTextField;
     private JButton incrDimensionButton;
     private JPanel mainPanel;
-    private JOptionPane Msg;
     private JButton[] botones = {peonButton, caballoButton, reinaButton, peonWhiteButton, damaButton, damaWhiteButton};
     private String[] botonesImg = {"peon56.png", "caballo56.png", "reina56.png", "peonwhite56.png", "damas56.png",
             "damaswhite56.png"};
@@ -32,8 +31,6 @@ public class VentanaInicial extends JFrame {
 
     private void initComponents() {
         setContentPane(mainPanel);
-        setContentPane(Msg);
-        Msg.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         activarButton(peonButton);
@@ -128,7 +125,5 @@ public class VentanaInicial extends JFrame {
     public String GetDimensions(){
         return dimensionesTextField.getText();
     }
-
-
 }
 

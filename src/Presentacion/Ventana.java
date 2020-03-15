@@ -13,7 +13,7 @@ public class Ventana extends JFrame {
         super(titulo);
 
         JPanel panelNorth = new JPanel();
-         Msg = new JOptionPane();
+        Msg = new JOptionPane();
         panelNorth.setLayout(new BorderLayout());
 
         Tablero tablero = new Tablero(controller, dimension, botonSeleccionado);
@@ -22,7 +22,7 @@ public class Ventana extends JFrame {
         Menu menu = new Menu(controller, botonSeleccionado);
         controller.setMenu(menu);
 
-        controller.setV(this);
+        controller.setVentana(this);
 
         PanelControl panelControl = new PanelControl(controller, dimension);
         controller.setPanelControl(panelControl);

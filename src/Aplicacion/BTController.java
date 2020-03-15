@@ -2,7 +2,6 @@ package Aplicacion;
 
 import Dominio.Imagen;
 import Dominio.Interfaz.IController;
-import Dominio.Pieza.Pieza;
 import Dominio.PiezasTablero;
 import Infraestructura.Backtracking;
 import Presentacion.Menu;
@@ -19,10 +18,7 @@ public class BTController implements IController {
     private PanelControl panelControl;
     private String piezaSeleccionada = "";
     private String piezasPath = "Dominio.Pieza";
-
-
-
-    private Ventana v;
+    private Ventana ventana;
 
     public BTController() { }
 
@@ -40,8 +36,8 @@ public class BTController implements IController {
         }
     }
 
-    public void setV(Ventana v) {
-        this.v = v;
+    public void setVentana(Ventana ventana) {
+        this.ventana = ventana;
     }
 
     public void setBacktracking(Backtracking backtracking) {
@@ -77,22 +73,22 @@ public class BTController implements IController {
 
     @Override
     public void startBacktrackingProcess() {
-        this.backtracking = new Backtracking(this);
+        this.backtracking = new Backtracking(this, tableroDominio);
     }
 
     @Override
     public void pintarPieza(int x, int y, int visitada) {
-            if(visitada==0){
-                //Pintamos la pieza en la casilla nueva
-            }else{
-                //Pintamos el número en la casilla
-            }
-
+        if(visitada==0){
+            //Pintamos la pieza en la casilla nueva
+            tableroPresentacion.pintarPieza(x, y);
+        }else{
+            //Pintamos el número en la casilla
+        }
     }
 
     @Override
     public void finalizacion(String s){
-        v.UserMsg(s);
+        ventana.UserMsg(s);
     }
 
     @Override

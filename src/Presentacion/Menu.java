@@ -47,12 +47,6 @@ public class Menu extends JPanel {
         }
     }
 
-    public void habilitarBotones(){
-        for (int i = 0; i < botones.length; i++){
-            botones[i].setEnabled(false);
-        }
-    }
-
     private void desactivarBoton(JButton button){
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
