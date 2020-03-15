@@ -32,6 +32,9 @@ public class Backtracking {
                 if (!t.getCasilla(xt, yt).isVisitada()) {
                     v++;
                     mover(t, xt, yt,v);
+                    if(v!=t.getDimension()){
+                        v--;
+                    }
                 }
             }
         }
