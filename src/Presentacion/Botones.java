@@ -16,6 +16,7 @@ public class Botones{
     private String imagesPath = "/Presentacion/Imagenes/";
 
     private BTController controller;
+
     public Botones(JPanel panel, BTController controller, int botonSeleccionado){
         this.controller = controller;
         this.botonSeleccionado = botonSeleccionado;

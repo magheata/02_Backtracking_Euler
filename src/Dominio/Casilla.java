@@ -3,22 +3,22 @@ package Dominio;
 import java.awt.*;
 
 public class Casilla {
-    private int x;
-    private int y;
+    private long x;
+    private long y;
     private Color color;
     protected boolean visitada = false;
 
-    public Casilla(int x, int y, Color color){
+    public Casilla(long x, long y, Color color){
         this.x = x;
         this.y = y;
-        this.color=color;
+        this.color = color;
     }
 
-    public int getX() {
+    public long getX() {
         return x;
     }
 
-    public int getY() {
+    public long getY() {
         return y;
     }
 

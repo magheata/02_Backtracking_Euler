@@ -23,7 +23,7 @@ public class Tablero extends JPanel{
 
     private int dimension;
 
-    private int pieza_x, pieza_y= -1;
+    private long pieza_x, pieza_y= -1;
     private GraphicsService graphicsService;
     private Dominio.Tablero tableroDominio;
     private ImageIcon imgpieza;
@@ -48,8 +48,8 @@ public class Tablero extends JPanel{
             @Override
             public void mouseReleased(MouseEvent e) {
                 System.out.println("X: " + e.getX() / lado + " Y: " + e.getY() / lado);
-                pieza_x = (int) (e.getX() / lado);
-                pieza_y = (int) (e.getY() / lado);
+                pieza_x = (e.getX() / lado);
+                pieza_y = (e.getY() / lado);
                 System.out.println("X:" + e.getX() + " Y:" + e.getY());
                 if (!dentroDeRango(pieza_x)){
                     pieza_x = cuadrarRango(pieza_x);
@@ -74,11 +74,11 @@ public class Tablero extends JPanel{
         setImagenPieza(tableroDominio);
     }
 
-    private boolean dentroDeRango(int i){
+    private boolean dentroDeRango(long i){
         return (i <= dimension - 1) && i >= 0;
     }
 
-    private int cuadrarRango(int i){
+    private long cuadrarRango(long i){
         if (i < 0){
             i = 0;
         } else {
@@ -130,10 +130,10 @@ public class Tablero extends JPanel{
         }
     }
 
-    public void pintarImagenEnCasilla(Dominio.Tablero tableroDominio, Graphics g, int x, int y){
-        pieza_x = (int) (x * lado);
-        pieza_y = (int) (y * lado);
-        tableroDominio.getImagen().paintComponent(g, pieza_x + BORDER_GAP, pieza_y + BORDER_GAP, (int) lado);
+    public void pintarImagenEnCasilla(Dominio.Tablero tableroDominio, Graphics g, long x, long y){
+        pieza_x = (x * lado);
+        pieza_y = (y * lado);
+        tableroDominio.getImagen().paintComponent(g, (int) pieza_x + BORDER_GAP, (int) pieza_y + BORDER_GAP, (int) lado);
     }
 
     public void actualizarDimensiones(int nuevaDimension){

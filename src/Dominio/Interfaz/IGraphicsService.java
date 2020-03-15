@@ -3,7 +3,7 @@ package Dominio.Interfaz;
 import Dominio.Pieza.Pieza;
 
 public interface IGraphicsService {
-    void setInicioPieza(int x, int y);
+    void setInicioPieza(long x, long y);
 
     Pieza pintarPieza();
 }

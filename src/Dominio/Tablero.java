@@ -3,6 +3,8 @@ package Dominio;
 import Dominio.Pieza.Peon;
 import Dominio.Pieza.Pieza;
 
+import java.awt.*;
+
 public class Tablero {
 
     protected Casilla[][] tablero;
@@ -19,13 +21,13 @@ public class Tablero {
         tablero = new Casilla[dimension][dimension];
         for (int i = 0; i < dimension; i++){
             for (int j = 0; j < dimension; j++){
-                tablero[i][j] = new Casilla(i,j);
+                tablero[i][j] = new Casilla(i,j, new Color(0, 0, 0));
             }
         }
     }
 
-    public void setInicioPieza(int x, int y){
-        this.inicioPieza = new Casilla(x, y);
+    public void setInicioPieza(long x, long y){
+        this.inicioPieza = new Casilla(x, y, new Color(0, 0, 0));
     }
 
     public void regenerar(int d) {

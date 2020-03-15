@@ -15,7 +15,7 @@ public class GraphicsService implements IGraphicsService {
     }
 
     @Override
-    public void setInicioPieza(int x, int y){
+    public void setInicioPieza(long x, long y){
         tableroDominio.setInicioPieza(x, y);
     }
 
@@ -24,5 +24,3 @@ public class GraphicsService implements IGraphicsService {
         return null;
     }
 }
-
-pub
