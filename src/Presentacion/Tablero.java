@@ -14,7 +14,9 @@ public class Tablero extends JPanel{
 
     private int lado;
     private int dimension;
-    private int pieza_x, pieza_y = -1;
+    private int casilla_pieza_x, casilla_pieza_y = -1;
+
+    private boolean tableroHabilitado = true;
 
     private BTController controller;
 
@@ -26,10 +28,12 @@ public class Tablero extends JPanel{
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                pieza_x = colocarEnCasilla((double) e.getX() / lado);
-                pieza_y = colocarEnCasilla((double) e.getY() / lado);
-                controller.setInicioPieza(pieza_x, pieza_y);
-                repaint();
+                if (tableroHabilitado){
+                    casilla_pieza_x = colocarEnCasilla((double) e.getX() / lado);
+                    casilla_pieza_y = colocarEnCasilla((double) e.getY() / lado);
+                    controller.setInicioPieza(casilla_pieza_x, casilla_pieza_y);
+                    repaint();
+                }
             }
 
             @Override
@@ -64,8 +68,8 @@ public class Tablero extends JPanel{
             }
         }
 
-        if (pieza_x != -1 && pieza_y != -1){
-            pintarImagenEnCasilla(g, pieza_x, pieza_y);
+        if (casilla_pieza_x != -1 && casilla_pieza_y != -1){
+            pintarImagenEnCasilla(g, casilla_pieza_x, casilla_pieza_y);
         }
     }
 
@@ -82,17 +86,35 @@ public class Tablero extends JPanel{
     }
 
     private void pintarImagenEnCasilla(Graphics g, int x, int y){
-        pieza_x = (x * lado);
-        pieza_y = (y * lado);
-        controller.getImagenPiezaSeleccionada().paintComponent(g, (int) pieza_x + BORDER_GAP, (int) pieza_y + BORDER_GAP, (int) lado);
+        controller.getImagenPiezaSeleccionada().paintComponent(g, (int) (x * lado) + BORDER_GAP, (int) (y * lado) + BORDER_GAP, (int) lado);
     }
 
-    public void actualizarDimensiones(int nuevaDimension){
+    public void actualizarDimensiones(int nuevaDimension, boolean decrementar){
+        int antiguaDimension = this.dimension;
         this.dimension = nuevaDimension;
         this.lado = (SIZEPANEL - (BORDER_GAP * 2))/ nuevaDimension;
-        this.pieza_y = -1;
-        this.pieza_x = -1;
+        boolean modificado = false;
+        if (decrementar){
+            if (casilla_pieza_x  == (antiguaDimension - 1)){
+                casilla_pieza_x--;
+                modificado = true;
+            } if(casilla_pieza_y == (antiguaDimension - 1)){
+                casilla_pieza_y--;
+                modificado = true;
+            }
+            if (modificado){
+                controller.setInicioPieza(casilla_pieza_x, casilla_pieza_y);
+            }
+        }
         repaint();
+    }
+
+    public void setTableroHabilitado(boolean tableroHabilitado) {
+        this.tableroHabilitado = tableroHabilitado;
+    }
+
+    public boolean isTableroHabilitado() {
+        return tableroHabilitado;
     }
 
     private int colocarEnCasilla(double i){
@@ -136,8 +158,8 @@ public class Tablero extends JPanel{
 
     public void pintarPieza (int x , int y, int v){
 
-        this.pieza_x=x;
-        this.pieza_y=y;
+        this.casilla_pieza_x=x;
+        this.casilla_pieza_y=y;
         repaint();
 
     }

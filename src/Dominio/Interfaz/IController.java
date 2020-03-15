@@ -8,6 +8,8 @@ public interface IController {
     Imagen getImagenPiezaSeleccionada();
     void crearDominioTablero(int dimension, int piezaSeleccionada);
     void startBacktrackingProcess();
+    void modificarAccesoBotones();
+    void modificarAccesoTablero();
     void pintarPieza(int x, int y, int visitada);
     void finalizacion(String s);
 
