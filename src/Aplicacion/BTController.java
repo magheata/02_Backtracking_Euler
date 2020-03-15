@@ -8,6 +8,7 @@ import Infraestructura.Backtracking;
 import Presentacion.Menu;
 import Presentacion.PanelControl;
 import Presentacion.Tablero;
+import Presentacion.Ventana;
 
 public class BTController implements IController {
 
@@ -19,7 +20,11 @@ public class BTController implements IController {
     private String piezaSeleccionada = "";
     private String piezasPath = "Dominio.Pieza";
 
-    public BTController() {}
+
+
+    private Ventana v;
+
+    public BTController() { }
 
     // GETTERS AND SETTERS
     public void setTableroPresentacion(Tablero tableroPresentacion) {
@@ -33,6 +38,14 @@ public class BTController implements IController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void setV(Ventana v) {
+        this.v = v;
+    }
+
+    public void setBacktracking(Backtracking backtracking) {
+        this.backtracking = backtracking;
     }
 
     public void setMenu(Menu menu) {
@@ -68,8 +81,18 @@ public class BTController implements IController {
     }
 
     @Override
-    public Pieza pintarPieza() {
-        return null;
+    public void pintarPieza(int x, int y, int visitada) {
+            if(visitada==0){
+                //Pintamos la pieza en la casilla nueva
+            }else{
+                //Pintamos el número en la casilla
+            }
+
+    }
+
+    @Override
+    public void finalizacion(String s){
+        v.UserMsg(s);
     }
 
     @Override

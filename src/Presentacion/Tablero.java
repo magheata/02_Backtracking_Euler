@@ -85,7 +85,7 @@ public class Tablero extends JPanel{
         return new Dimension(SIZEPANEL, SIZEPANEL);
     }
 
-    public void pintarImagenEnCasilla(Graphics g, int x, int y){
+    private void pintarImagenEnCasilla(Graphics g, int x, int y){
         controller.getImagenPiezaSeleccionada().paintComponent(g, (int) (x * lado) + BORDER_GAP, (int) (y * lado) + BORDER_GAP, (int) lado);
     }
 
@@ -154,5 +154,13 @@ public class Tablero extends JPanel{
             i = dimension - 1;
         }
         return i;
+    }
+
+    public void pintarPieza (int x , int y, int v){
+
+        this.casilla_pieza_x=x;
+        this.casilla_pieza_y=y;
+        repaint();
+
     }
 }
