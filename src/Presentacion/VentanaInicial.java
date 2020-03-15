@@ -46,6 +46,7 @@ public class VentanaInicial extends JFrame {
                 startActionPerformed(e);
             }
         });
+
         decrDimensionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

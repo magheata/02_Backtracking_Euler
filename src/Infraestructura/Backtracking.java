@@ -33,8 +33,9 @@ public class Backtracking {
                     v++;
                     // controller.pintarPieza(x, y);
                     mover(t, xt, yt,v);
-
-                    //pintar anterior
+                    if(v!=t.getDimension()){
+                        v--;
+                    }
                 }
             }
         }
