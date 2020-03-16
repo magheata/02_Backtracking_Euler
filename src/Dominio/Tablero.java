@@ -2,25 +2,25 @@ package Dominio;
 
 import Dominio.Pieza.Pieza;
 
-import java.awt.*;
-
 public class Tablero {
 
     protected Casilla[][] tablero;
     protected Casilla inicioPieza;
     private int dimension;
     private Pieza pieza = null;
-    private int piezaSeleccionada;
 
     public Tablero(int dimension, int piezaSeleccionada){
-        this.piezaSeleccionada = piezaSeleccionada;
         String piezaPath = "Dominio.Pieza.".concat(PiezasTablero.values()[piezaSeleccionada].name());
         setClasePieza(piezaPath);
         this.dimension = dimension;
+        inicializarCasillas();
+    }
+
+    private void inicializarCasillas(){
         tablero = new Casilla[dimension][dimension];
         for (int i = 0; i < dimension; i++){
             for (int j = 0; j < dimension; j++){
-                tablero[i][j] = new Casilla(i,j, new Color(0, 0, 0));
+                tablero[i][j] = new Casilla(i,j);
             }
         }
     }
@@ -28,14 +28,15 @@ public class Tablero {
     public void resetearTablero(){
         for (int i = 0; i < dimension; i++){
             for (int j = 0; j < dimension; j++){
-                tablero[i][j].setVisitada(false);
+                tablero[i][j].setVisitada(false, -1);
             }
         }
     }
 
+    //region [GETTERS Y SETTERS]
     public void setInicioPieza(long x, long y){
-        this.inicioPieza = new Casilla(x, y, new Color(0, 0, 0));
-        this.tablero[(int)x][(int)y].setVisitada(true);
+        this.inicioPieza = new Casilla(x, y);
+        this.tablero[(int)x][(int)y].setVisitada(true, 1);
     }
 
     public Casilla getInicioPieza() {
@@ -53,7 +54,7 @@ public class Tablero {
     public void setClasePieza(String p) {
         try {
             Class c = Class.forName(p);
-            pieza = (Pieza) c.newInstance();
+            pieza = (Pieza) c.getDeclaredConstructor().newInstance();
             if (pieza.afectaDimension()) {
                 pieza = (Pieza) c.getConstructor(int.class).newInstance(dimension);
             }
@@ -67,4 +68,10 @@ public class Tablero {
     }
 
     public Casilla getCasilla(int x , int y) {return tablero[x][y];}
+
+    public void setDimension(int dimension) {
+        this.dimension = dimension;
+        inicializarCasillas();
+    }
+    //endregion
 }

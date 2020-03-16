@@ -9,12 +9,13 @@ import Presentacion.PanelControl;
 import Presentacion.Tablero;
 import Presentacion.Ventana;
 
+import java.awt.*;
+
 public class BTController implements IController {
 
     private Dominio.Tablero tableroDominio;
     private Tablero tableroPresentacion;
     private Menu menu;
-    private Backtracking backtracking;
     private PanelControl panelControl;
     private String piezaSeleccionada = "";
     private String piezasPath = "Dominio.Pieza";
@@ -22,7 +23,7 @@ public class BTController implements IController {
 
     public BTController() { }
 
-    // GETTERS AND SETTERS
+    //region [GETTERS AND SETTERS]
     public void setTableroPresentacion(Tablero tableroPresentacion) {
         this.tableroPresentacion = tableroPresentacion;
     }
@@ -42,10 +43,6 @@ public class BTController implements IController {
         this.ventana = ventana;
     }
 
-    public void setBacktracking(Backtracking backtracking) {
-        this.backtracking = backtracking;
-    }
-
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
@@ -54,7 +51,14 @@ public class BTController implements IController {
         this.panelControl = panelControl;
     }
 
+    public Dominio.Tablero getTableroDominio() {
+        return tableroDominio;
+    }
+
+    //endregion
+
     public void modificarDimensionesTablero(int nuevasDimensiones, boolean incrementar){
+        tableroDominio.setDimension(nuevasDimensiones);
         tableroPresentacion.actualizarDimensiones(nuevasDimensiones, incrementar);
     }
 
@@ -75,7 +79,7 @@ public class BTController implements IController {
 
     @Override
     public void startBacktrackingProcess() {
-        this.backtracking = new Backtracking(this, tableroDominio);
+        new Backtracking(this, tableroDominio);
     }
 
     @Override
@@ -85,6 +89,7 @@ public class BTController implements IController {
             tableroPresentacion.pintarPieza(x, y);
         }else{
             //Pintamos el número en la casilla
+            tableroPresentacion.pintarCasillaVisitada(x, y, visitada);
         }
     }
 
