@@ -37,7 +37,7 @@ public class Backtracking {
         // x e y temporales
         int xt = 0;
         int yt = 0;
-        if (visitada <= tamaño) {
+        if (visitada < tamaño) {
             for (int i = 0; i < tablero.getPieza().getNumMovs() && !acabado; i++) {
                 xt = x + tablero.getPieza().getMovX(i);
                 yt = y + tablero.getPieza().getMovY(i);
