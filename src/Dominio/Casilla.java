@@ -14,6 +14,11 @@ public class Casilla {
         this.color = color;
     }
 
+    public Casilla(long x, long y){
+        this.x = x;
+        this.y = y;
+    }
+
     public long getX() {
         return x;
     }

@@ -52,10 +52,12 @@ public class PanelControl extends JPanel {
                 decrDimensionButton.setEnabled(false);
                 startButton.setText("Stop");
                 controller.startBacktrackingProcess();
-            } else {
+            } else if (startButton.getText() == "Start"){
                 startButton.setText("Start");
                 incrDimensionButton.setEnabled(true);
                 decrDimensionButton.setEnabled(true);
+            } else {
+                //resetear tablero
             }
             controller.modificarAccesoBotones();
             controller.modificarAccesoTablero();
