@@ -11,7 +11,6 @@ public class Backtracking {
     private BTController controller;
     private int casillasRecorridas = 1;
     private int tamaño;
-    private boolean acabado = false;
     private Tablero tablero;
     private Stack<Casilla> stackCasillas;
 

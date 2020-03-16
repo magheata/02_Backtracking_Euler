@@ -15,14 +15,17 @@ public class Tablero extends JPanel{
     private int lado;
     private int dimension;
     private int casilla_pieza_x, casilla_pieza_y = -1;
-
     private boolean tableroHabilitado = true;
+    private FontFactory fontFactory;
+    private Font font;
 
+    private Dominio.Tablero tableroDominio;
     private BTController controller;
 
     public Tablero(BTController controller, int dimension, int piezaSeleccionada){
         this.controller = controller;
         this.controller.crearDominioTablero(dimension, piezaSeleccionada);
+        this.tableroDominio = this.controller.getTableroDominio();
         this.dimension = dimension;
         this.lado = (SIZEPANEL - (BORDER_GAP * 2))/ dimension;
         this.addMouseListener(new MouseListener() {
@@ -64,6 +67,9 @@ public class Tablero extends JPanel{
                     if ((j % 2) == 0) {
                         g.fillRect(j * lado + BORDER_GAP, i * lado + BORDER_GAP, lado, lado);
                     }
+                }
+                if (tableroDominio.getCasilla(i, j).isVisitada()){
+                    pintarCasillaVisitada(i, j, tableroDominio.getCasilla(i, j).getOrdenVisitada());
                 }
             }
         }
@@ -161,8 +167,23 @@ public class Tablero extends JPanel{
     }
 
     public void pintarPieza (int x , int y){
-        this.casilla_pieza_x=x;
-        this.casilla_pieza_y=y;
+        this.casilla_pieza_x = x;
+        this.casilla_pieza_y = y;
         repaint();
+    }
+
+    private void cargarFuente(){
+        this.font = fontFactory.getFont("PressStart2P.ttf");
+        font = font.deriveFont(Font.PLAIN, 30);
+        this.getGraphics().setFont(font);
+
+    }
+    public void pintarCasillaVisitada(int x, int y, int visitado){
+        Graphics2D g2 = (Graphics2D)this.getGraphics();
+        Color oldColor = g2.getColor();
+        g2.setColor(Color.GRAY);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.drawString(String.valueOf(visitado),x * lado + BORDER_GAP + (lado/2) - 2,y * lado + BORDER_GAP + (lado/2) - 2);
+        g2.setColor(oldColor);
     }
 }
