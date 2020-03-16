@@ -12,5 +12,5 @@ public interface IController {
     void modificarAccesoTablero();
     void pintarPieza(int x, int y, int visitada);
     void finalizacion(String s);
-
+    void resetearTablero();
 }

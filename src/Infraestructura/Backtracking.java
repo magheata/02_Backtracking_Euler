@@ -77,11 +77,11 @@ public class Backtracking {
                  if (isMovimientoValido(xt, yt) && !tablero.getCasilla(xt, yt).isVisitada()){
                      stackCasillas.push(new Casilla(xt, yt));
                      controller.pintarPieza(xt, yt,0);
-                     /*try{
-                         Thread.sleep(1000);
+                     try{
+                         Thread.sleep(500);
                      } catch(Exception ex){
                      }
-                     controller.pintarPieza(x, y, visitada);*/
+                     //controller.pintarPieza(x, y, visitada);
                      tablero.getCasilla(xt, yt).setVisitada(true);
                      x = xt;
                      y = yt;

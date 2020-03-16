@@ -29,8 +29,10 @@ public class BTController implements IController {
 
     public void setPiezaSeleccionada(int pieza){
         try {
-            tableroDominio.setClasePieza(piezasPath.concat(".").concat(PiezasTablero.values()[pieza].name()));
-            piezaSeleccionada = tableroDominio.getPieza().getNombre();
+            if (pieza != -1){
+                tableroDominio.setClasePieza(piezasPath.concat(".").concat(PiezasTablero.values()[pieza].name()));
+                piezaSeleccionada = tableroDominio.getPieza().getNombre();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -89,6 +91,13 @@ public class BTController implements IController {
     @Override
     public void finalizacion(String s){
         ventana.UserMsg(s);
+        panelControl.ponerBotonReset();
+    }
+
+    @Override
+    public void resetearTablero() {
+        tableroDominio.resetearTablero();
+        tableroPresentacion.quitarPieza();
     }
 
     @Override

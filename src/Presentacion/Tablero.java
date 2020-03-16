@@ -156,11 +156,8 @@ public class Tablero extends JPanel{
         return i;
     }
 
-    public void pintarPieza (int x , int y, int v){
-        this.casilla_pieza_x=x;
-        this.casilla_pieza_y=y;
-        repaint();
-
+    public void quitarPieza(){
+        pintarPieza(-1, -1);
     }
 
     public void pintarPieza (int x , int y){

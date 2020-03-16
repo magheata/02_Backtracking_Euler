@@ -25,6 +25,14 @@ public class Tablero {
         }
     }
 
+    public void resetearTablero(){
+        for (int i = 0; i < dimension; i++){
+            for (int j = 0; j < dimension; j++){
+                tablero[i][j].setVisitada(false);
+            }
+        }
+    }
+
     public void setInicioPieza(long x, long y){
         this.inicioPieza = new Casilla(x, y, new Color(0, 0, 0));
         this.tablero[(int)x][(int)y].setVisitada(true);

@@ -11,7 +11,8 @@ public class PanelControl extends JPanel {
     private JProgressBar progressBar;
     private BTController controller;
     private int dimension;
-
+    private final int MIN_DIMENSION = 5;
+    private final int MAX_DIMENSION = 10;
     private boolean dimensionModificada = false;
 
     public PanelControl(BTController controller, int dimension){
@@ -57,7 +58,11 @@ public class PanelControl extends JPanel {
                 incrDimensionButton.setEnabled(true);
                 decrDimensionButton.setEnabled(true);
             } else {
-                //resetear tablero
+                startButton.setText("Start");
+                controller.resetearTablero();
+                controller.setPiezaSeleccionada(-1);
+                incrDimensionButton.setEnabled(true);
+                decrDimensionButton.setEnabled(true);
             }
             controller.modificarAccesoBotones();
             controller.modificarAccesoTablero();
@@ -68,9 +73,14 @@ public class PanelControl extends JPanel {
         this.add(startButton);
         this.add(progressBar);
     }
+
+    public void ponerBotonReset(){
+        startButton.setText("Reset");
+    }
+
     private void ButtonMenosAgentesActionPerformed() {
         // TODO add your handling code here:
-        if (!(dimension <= 5)) {
+        if (!(dimension <= MIN_DIMENSION)) {
             dimension--;
             dimensionModificada = true;
         } else {
@@ -79,7 +89,7 @@ public class PanelControl extends JPanel {
     }
 
     private void ButtonMasAgentesActionPerformed() {
-        if (!(dimension >= 15)) {
+        if (!(dimension >= MAX_DIMENSION)) {
             dimension++;
             dimensionModificada = true;
         } else {
