@@ -11,6 +11,7 @@ public class Backtracking {
     private BTController controller;
     private int casillasRecorridas = 1;
     private int tamaño;
+    private boolean acabado = false;
     private Tablero tablero;
     private Stack<Casilla> stackCasillas;
 
@@ -23,29 +24,31 @@ public class Backtracking {
 
     public void BT(Tablero tablero, int x, int y){
         tamaño= (int) Math.pow(tablero.getDimension(), 2);
-        if (hayRecorridoEuler(x, y, casillasRecorridas)) {
+        int visitada=1;
+        mover(x,y,visitada);
+        if (acabado) {
             controller.finalizacion("Hemos encontrado una solución");
         } else {
             controller.finalizacion("No hemos encontrado una solución");
         }
     }
 
-    /*private void mover(int x, int y, int visitada) {
+    private void mover(int x, int y, int visitada) {
         // x e y temporales
         int xt = 0;
         int yt = 0;
-        if (visitada < tamaño) {
-            for (int i = 0; i < tablero.getPieza().getNumMovs(); i++) {
+        if (visitada <= tamaño) {
+            for (int i = 0; i < tablero.getPieza().getNumMovs() && !acabado; i++) {
                 xt = x + tablero.getPieza().getMovX(i);
                 yt = y + tablero.getPieza().getMovY(i);
                 if (isMovimientoValido(xt, yt)){
                     if (!tablero.getCasilla(xt, yt).isVisitada()) {
                         controller.pintarPieza(xt, yt,0);
-                        try{
-                            Thread.sleep(1000);
+                      /*  try{
+                            Thread.sleep(500);
                         } catch(Exception ex){
 
-                        }
+                        }*/
                         controller.pintarPieza(x, y, visitada);
                         tablero.getCasilla(xt, yt).setVisitada(true);
                         visitada++;
@@ -54,15 +57,19 @@ public class Backtracking {
                             visitada--;
                             tablero.getCasilla(xt, yt).setVisitada(false);
                             controller.pintarPieza(x,y,0);
+                        }else{
+                            acabado=true;
+
+                        }
                         }
                         System.out.println(visitada);
                     }
                 }
             }
         }
-    }*/
 
-     private boolean hayRecorridoEuler(int x, int y, int visitada) {
+
+    /* private boolean hayRecorridoEuler(int x, int y, int visitada) {
          //Inicio pieza
          stackCasillas.push(new Casilla(x, y));
          int xt, yt;
@@ -96,7 +103,7 @@ public class Backtracking {
          } else {
              return false;
          }
-     }
+     }*/
 
     private boolean isMovimientoValido(int x, int y){
         return x < tablero.getDimension() && x >= 0 && y < tablero.getDimension() && y >= 0;
