@@ -8,7 +8,6 @@ public class FontFactory {
         if (name == null) {
             font = new Font("sans", Font.PLAIN, 24);
         }
-
         try {
             String fname = "/Presentacion/Fuentes/" + name;
             font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream(fname));

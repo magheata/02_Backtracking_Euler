@@ -31,25 +31,20 @@ public class Tablero {
                 tablero[i][j].setVisitada(false, -1);
             }
         }
+        this.inicioPieza = new Casilla(-1, -1);
     }
 
     //region [GETTERS Y SETTERS]
-    public void setInicioPieza(long x, long y){
+    public void setInicioPieza(int x, int y){
         this.inicioPieza = new Casilla(x, y);
-        this.tablero[(int)x][(int)y].setVisitada(true, 1);
+        this.tablero[x][y].setVisitada(true, 1);
     }
 
-    public Casilla getInicioPieza() {
-        return inicioPieza;
-    }
+    public Casilla getInicioPieza() { return inicioPieza; }
 
-    public int getDimension() {
-        return dimension;
-    }
+    public int getDimension() { return dimension; }
 
-    public Pieza getPieza() {
-        return pieza;
-    }
+    public Pieza getPieza() { return pieza; }
 
     public void setClasePieza(String p) {
         try {
@@ -63,11 +58,9 @@ public class Tablero {
         }
     }
 
-    public Imagen getImagen() {
-        return pieza.getImagen();
-    }
+    public Imagen getImagen() { return pieza.getImagen(); }
 
-    public Casilla getCasilla(int x , int y) {return tablero[x][y];}
+    public Casilla getCasilla(int x , int y) { return tablero[x][y]; }
 
     public void setDimension(int dimension) {
         this.dimension = dimension;

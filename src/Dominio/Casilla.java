@@ -1,24 +1,32 @@
 package Dominio;
 
-import java.awt.*;
-
 public class Casilla {
-    private long x;
-    private long y;
+    private int x;
+    private int y;
     protected boolean visitada = false;
 
     private int ordenVisitada;
 
-    public Casilla(long x, long y){
+    public Casilla(int x, int y){
         this.x = x;
         this.y = y;
     }
 
-    public long getX() {
+    @Override
+    public String toString() {
+        return "Casilla{" +
+                "x=" + x +
+                ", y=" + y +
+                ", visitada=" + visitada +
+                ", ordenVisitada=" + ordenVisitada +
+                '}';
+    }
+
+    public int getX() {
         return x;
     }
 
-    public long getY() {
+    public int getY() {
         return y;
     }
 
@@ -30,7 +38,6 @@ public class Casilla {
         this.ordenVisitada = ordenVisitada;
         this.visitada = visitada;
     }
-
 
     public int getOrdenVisitada() {
         return ordenVisitada;

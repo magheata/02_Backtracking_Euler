@@ -7,13 +7,14 @@ import java.awt.*;
 
 public class Ventana extends JFrame {
 
-    JOptionPane Msg;
+    private JOptionPane messageOptionPane;
 
     public Ventana(BTController controller, String titulo, int dimension, int botonSeleccionado) throws HeadlessException {
         super(titulo);
 
         JPanel panelNorth = new JPanel();
-        Msg = new JOptionPane();
+        messageOptionPane = new JOptionPane();
+        messageOptionPane.setMinimumSize(new Dimension(200, 100));
         panelNorth.setLayout(new BorderLayout());
 
         Tablero tablero = new Tablero(controller, dimension, botonSeleccionado);
@@ -38,7 +39,7 @@ public class Ventana extends JFrame {
         this.setVisible(true);
     }
 
-    public void UserMsg(String s){
-        Msg.showMessageDialog(getContentPane(),s);
+    public void UserMsg(String mensaje){
+        messageOptionPane.showMessageDialog(this.getContentPane(), mensaje);
     }
 }

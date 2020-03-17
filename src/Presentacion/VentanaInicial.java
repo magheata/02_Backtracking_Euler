@@ -24,8 +24,8 @@ public class VentanaInicial extends JFrame {
             "damaswhite56.png"};
     private int selectedButton = 0;
     private String imagesPath = "/Presentacion/Imagenes/";
-    private final int MIN_DIMENSION = 5;
-    private final int MAX_DIMENSION = 10;
+    private final int MIN_DIMENSION = 3;
+    private final int MAX_DIMENSION = 8;
 
     public VentanaInicial() {
         initComponents();
@@ -42,25 +42,11 @@ public class VentanaInicial extends JFrame {
         desactivarBoton(damaButton);
         desactivarBoton(damaWhiteButton);
 
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startActionPerformed(e);
-            }
-        });
+        startButton.addActionListener(e -> startActionPerformed(e));
 
-        decrDimensionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ButtonMenosAgentesActionPerformed(e);
-            }
-        });
-        incrDimensionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ButtonMasAgentesActionPerformed(e);
-            }
-        });
+        decrDimensionButton.addActionListener(e -> ButtonMenosAgentesActionPerformed(e));
+
+        incrDimensionButton.addActionListener(e -> ButtonMasAgentesActionPerformed(e));
 
         for (int i = 0; i < botones.length; i++){
             JButton boton = botones[i];
