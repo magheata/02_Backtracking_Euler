@@ -28,11 +28,11 @@ public class DamaWhite extends Pieza{
         movy[pos++] = -2; //    oblicuo2
 
         //Abajo
-        movx[pos] = 1; // vertical
+        movx[pos] = 0; // vertical
         movy[pos++] = 1; //vertical
 
         //Arriba
-        movx[pos] = 1; // vertical
+        movx[pos] = 0; // vertical
         movy[pos++] = -1; //vertical
 
 

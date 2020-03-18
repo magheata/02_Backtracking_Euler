@@ -1,3 +1,6 @@
+/**
+ * @authors Miruna Andreea Gheata, Rafael Adrián Gil Cañestro
+ */
 package Dominio;
 
 import javax.imageio.ImageIO;
@@ -10,7 +13,7 @@ public class Imagen {
     private BufferedImage img;
 
     /**
-     * Consntructor de la clase que genera la imagen
+     * Constructor de la clase que genera la imagen
      *
      * @param s
      */

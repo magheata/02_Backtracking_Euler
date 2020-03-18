@@ -1,3 +1,6 @@
+/**
+ * @authors Miruna Andreea Gheata, Rafael Adrián Gil Cañestro
+ */
 package Dominio.Interfaz;
 
 import Dominio.Imagen;
@@ -15,4 +18,5 @@ public interface IController {
     void mostrarMensajeAlUsuario(String s);
     boolean isCasillaVisitada(int x, int y);
     int getOrdenVisitadaCasilla(int x, int y);
+    void mostrarDuracionEjecucion();
 }
