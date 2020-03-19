@@ -35,6 +35,7 @@ public class Tablero {
         for (int i = 0; i < dimension; i++){
             for (int j = 0; j < dimension; j++){
                 tablero[i][j] = new Casilla(i,j);
+                tablero[i][j].setVisitada(false, -1);
             }
         }
     }
@@ -51,6 +52,29 @@ public class Tablero {
         this.inicioPieza = new Casilla(-1, -1);
     }
 
+    /**
+     * Sirve para saber si la coordenada está dentro del rango del tablero
+     * @param i
+     * @return
+     */
+    public boolean dentroDeRango(int i){
+        return (i <= dimension - 1) && i >= 0;
+    }
+
+    /**
+     * Método que sirve para cuadrar las coordenadas en caso de que se haga click fuera del tablero
+     * @param i
+     * @return
+     */
+    public int cuadrarRango(int i){
+        if (i < 0){
+            i = 0;
+        } else {
+            i = dimension - 1;
+        }
+        return i;
+    }
+
 
     //region [GETTERS Y SETTERS]
 
@@ -60,8 +84,9 @@ public class Tablero {
      * @param y
      */
     public void setInicioPieza(int x, int y){
-        this.inicioPieza = new Casilla(x, y);
-        this.tablero[x][y].setVisitada(true, 1);
+        inicioPieza = new Casilla(x, y);
+        inicioPieza.setVisitada(true, 1);
+        tablero[x][y] = inicioPieza;
     }
 
     /**

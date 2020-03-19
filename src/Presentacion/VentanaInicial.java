@@ -4,6 +4,7 @@
 package Presentacion;
 
 import Aplicacion.BTController;
+import Dominio.Tablero;
 
 import javax.swing.*;
 
@@ -13,7 +14,7 @@ import javax.swing.*;
  * 2. Elegir el tamaño del tablero: el rango oscila desde los 3 hasta las 8 casillas.
  * 3. Botón de "Start" que lleva a la ventana principal del programa
  */
-public class VentanaInicial extends JFrame {
+public class VentanaInicial extends JFrame{
     private JButton peonButton;
     private JButton caballoButton;
     private JButton reinaButton;
@@ -33,6 +34,7 @@ public class VentanaInicial extends JFrame {
     private final int MIN_DIMENSION = 3;
     private final int MAX_DIMENSION = 8;
 
+    private BTController controller;
     /**
      *  Constructor vacío
      */
@@ -116,8 +118,14 @@ public class VentanaInicial extends JFrame {
      * Crear elemento Ventana y el BTController, y esconder la Ventana Incial
      */
     private void startActionPerformed() {
+        //Creamos el controlador
         BTController controller = new BTController();
+
+        //Creamos la ventana principal
         Ventana m = new Ventana(controller, "Euler", Integer.parseInt(dimensionesTextField.getText()), selectedButton);
+
+        //Creamos el Tablero del Dominio (el Modelo)
+        controller.setTableroDominio(new Tablero(Integer.parseInt(dimensionesTextField.getText()), selectedButton));
         m.setVisible(true);
         this.setVisible(false);
     }

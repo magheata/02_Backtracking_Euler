@@ -7,15 +7,17 @@ import Aplicacion.BTController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Random;
 
-public class PanelControl extends JPanel {
+public class PanelControl extends JPanel implements PropertyChangeListener {
 
     private final int MIN_DIMENSION = 3;
     private final int MAX_DIMENSION = 8;
     private final String LABEL_INCR_BTN = "+";
     private final String LABEL_DECR_BTN = "-";
     private final String LABEL_START_BTN = "Start";
-    private final String LABEL_STOP_BTN = "Stop";
     private final String LABEL_RESTART_BTN = "Restart";
     private final String LABEL_DURACION_EJECUCION = "DURACIÓN EJECUCIÓN:";
     private final int FONT_SIZE = 12;
@@ -27,7 +29,9 @@ public class PanelControl extends JPanel {
     private JButton incrDimensionButton, decrDimensionButton, startButton;
     private JTextArea tiempoTardadoTextArea;
     private JLabel tiempoTardadoLabel;
+    private JProgressBar progressBar;
     private BTController controller;
+    private Task task;
     private Font font;
 
     /**
@@ -38,6 +42,7 @@ public class PanelControl extends JPanel {
      */
     public PanelControl(BTController controller, int dimension, Font font){
         this.controller = controller;
+        controller.addPropertyChangeListener(this);
         this.dimension = dimension;
         this.font = font.deriveFont(Font.PLAIN, FONT_SIZE);;
         initComponents();
@@ -61,6 +66,9 @@ public class PanelControl extends JPanel {
         tiempoTardadoLabel = new JLabel(LABEL_DURACION_EJECUCION);
         tiempoTardadoLabel.setFont(font);
         tiempoTardadoLabel.setVisible(false);
+
+        progressBar = new JProgressBar();
+        progressBar.setVisible(false);
 
         //region [AÑADIR ACTION LISTENERS A LOS BOTONES]
         incrDimensionButton.addActionListener(e -> {
@@ -86,24 +94,21 @@ public class PanelControl extends JPanel {
                 if (controller.isInicioPiezaDefinido()){
                     // Se deshabilitan los botones de +/- dimension del tablero
                     disableDimensionButtons();
-                    startButton.setText(LABEL_STOP_BTN);
-
+                    startButton.setEnabled(false);
                     // Deshabilitamos los botones de las piezas
                     controller.modificarAccesoBotones();
                     // Deshabilitamos el tablero
                     controller.modificarAccesoTablero();
                     //Iniciamos el proceso de backtracking
                     controller.startBacktrackingProcess();
+                    progressBar.setVisible(true);
+                    task = new Task();
+                    task.addPropertyChangeListener(this);
+                    task.execute();
                 } else {
                     // En caso contrario se notifica al usuario de que falta la pieza
                     controller.mostrarMensajeAlUsuario(MENSAJE_ERROR_PIEZAINICIO);
                 }
-            } else if (startButton.getText().equals(LABEL_STOP_BTN)){
-                //Si el texto es de parar se deben habilitar los botones
-                startButton.setText(LABEL_START_BTN);
-                enableDimensionButtons();
-                controller.modificarAccesoBotones();
-                controller.modificarAccesoTablero();
             } else {
                 /* En caso contrario el texto es Restart, por lo que se deben resetear todas las variables de
                 * control y de interés */
@@ -128,6 +133,7 @@ public class PanelControl extends JPanel {
         this.add(decrDimensionButton);
         this.add(incrDimensionButton);
         this.add(startButton);
+        this.add(progressBar);
         this.add(tiempoTardadoLabel);
         this.add(tiempoTardadoTextArea);
     }
@@ -136,6 +142,7 @@ public class PanelControl extends JPanel {
      *
      */
     public void ponerBotonReset(){
+        startButton.setEnabled(true);
         startButton.setText(LABEL_RESTART_BTN);
     }
 
@@ -178,7 +185,7 @@ public class PanelControl extends JPanel {
     }
 
     /**
-     *
+     * Activamos los botones de dimensión
      */
     private void enableDimensionButtons(){
         incrDimensionButton.setEnabled(true);
@@ -186,11 +193,59 @@ public class PanelControl extends JPanel {
     }
 
     /**
-     *
+     * Desactivamos los botones de dimensión
      */
     private void disableDimensionButtons(){
         incrDimensionButton.setEnabled(true);
         decrDimensionButton.setEnabled(true);
     }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+        if ("progress" == propertyChangeEvent.getPropertyName()) {
+            int progress = (Integer) propertyChangeEvent.getNewValue();
+            progressBar.setValue(progress);
+        } else if ("procesoAcabado" == propertyChangeEvent.getPropertyName()) { /* Mira que el proceso acabe */
+            if (task != null){ /* Si hay tarea la cancelamos */
+                task.cancel(true);
+            }
+        }
+    }
     //endregion
+
+    /**
+     * Tarea que servirá para actualizar el JProgressBar mientras el proceso esté calculando
+     */
+    private class Task extends SwingWorker<Void, Void> {
+        /*
+         * Main task. Executed in background thread.
+         */
+        @Override
+        public Void doInBackground() {
+            Random random = new Random();
+            while (!controller.isProcesoAcabado()){
+                int progress = 0;
+                //Initialize progress property.
+                setProgress(0);
+                while (progress < 110) {
+                    //Sleep for up to one second.
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ignore) {}
+                    //Make random progress.
+                    progress += 10;
+                    setProgress(Math.min(progress, 100));
+                }
+            }
+            return null;
+        }
+
+        /*
+         * Executed in event dispatching thread
+         */
+        @Override
+        public void done() {
+            progressBar.setVisible(false);
+        }
+    }
 }

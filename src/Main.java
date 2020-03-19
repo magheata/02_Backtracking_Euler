@@ -3,7 +3,7 @@ import Presentacion.VentanaInicial;
 import javax.swing.*;
 
 /**
- *
+ * Clase que inicializa la ejecución del programa
  */
 public class Main {
     /**

@@ -18,6 +18,8 @@ public class RecorridoEulerService implements IRecorridoEulerService {
     private int casillasRecorridas;
     private Tablero tablero;
     private long duracionEjecucion;
+    private Thread worker;
+
 
     /**
      *
@@ -27,27 +29,21 @@ public class RecorridoEulerService implements IRecorridoEulerService {
         this.controller = controller;
     }
 
-    /**
-     *
-     * @param tablero
-     */
+    public void start() {
+        worker = new Thread(this);
+        worker.start();
+    }
+
     @Override
-    public void encontrarRecorridoEuleriano(Tablero tablero){
-        // Reseteamos las variables
-        this.tablero = tablero;
+    public void run() {
         hayRecorrido = false;
+        tablero = controller.getTableroDominio();
         casillasRecorridas = 1;
         tamaño = (int) Math.pow(tablero.getDimension(), 2);
         duracionEjecucion = System.nanoTime(); /* Guardamos el momento en el que empieza el proceso*/
         backtrackingEuler(tablero.getInicioPieza().getX(), tablero.getInicioPieza().getY());
         duracionEjecucion = System.nanoTime() - duracionEjecucion; /* Miramos cuánto tiempo ha tardado */
-        controller.pintarTablero(); /* Pintamos el tablero con las casillas actualizadas */
-        controller.mostrarDuracionEjecucion(); /* Mostramos el tiempo total que ha tardado */
-        if (hayRecorrido) {
-            controller.finalizacion("Hemos encontrado una solución");
-        } else {
-            controller.finalizacion("No hemos encontrado una solución");
-        }
+        controller.mostrarCaminoEuler(hayRecorrido);
     }
 
     /**
@@ -105,4 +101,5 @@ public class RecorridoEulerService implements IRecorridoEulerService {
     public long getDuracionEjecucion() {
         return duracionEjecucion;
     }
+
 }

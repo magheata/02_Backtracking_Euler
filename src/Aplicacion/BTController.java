@@ -12,6 +12,9 @@ import Presentacion.PanelControl;
 import Presentacion.Tablero;
 import Presentacion.Ventana;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 /***
  * Controlador del programa que se encarga de realizar la comuniación entre los distintos elementos del proyecto
  */
@@ -24,57 +27,42 @@ public class BTController implements IController {
     private String piezasPath = "Dominio.Pieza";
     private Ventana ventana;
     private boolean inicioPiezaDefinido;
+    private boolean procesoAcabado = true;
+    private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
      *
      */
-    public BTController() {
+    public BTController() {}
 
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        changes.addPropertyChangeListener(l);
     }
-
-    //region [GETTERS AND SETTERS]
-    public void setTableroPresentacion(Tablero tableroPresentacion) {
-        this.tableroPresentacion = tableroPresentacion;
-    }
-
-    public void setPiezaSeleccionada(int pieza){
-        try {
-            if (pieza != -1){
-                resetearTablero();
-                this.inicioPiezaDefinido = false;
-                tableroDominio.setClasePieza(piezasPath.concat(".").concat(PiezasTablero.values()[pieza].name()));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void setVentana(Ventana ventana) {
-        this.ventana = ventana;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public void setPanelControl(PanelControl panelControl) {
-        this.panelControl = panelControl;
-    }
-
-    public boolean isInicioPiezaDefinido() {
-        return inicioPiezaDefinido;
-    }
-    //endregion
 
     /**
      *
      * @param nuevasDimensiones
-     * @param incrementar
+     * @param decrementar
      */
-    public void modificarDimensionesTablero(int nuevasDimensiones, boolean incrementar){
-        //S
+    public void modificarDimensionesTablero(int nuevasDimensiones, boolean decrementar){
+        int antiguaDimension = this.tableroDominio.getDimension();
         tableroDominio.setDimension(nuevasDimensiones);
-        tableroPresentacion.actualizarDimensiones(nuevasDimensiones, incrementar);
+        if (inicioPiezaDefinido){
+            int coordenada_x = tableroDominio.getInicioPieza().getX();
+            int coordenada_y = tableroDominio.getInicioPieza().getY();
+            if (decrementar){
+            /* Si la pieza estaba puesta en los límites superiores del tablero y se quiere decrementar el tamaño,
+            se modifica la posición de la pieza
+            */
+                if (coordenada_x  == (antiguaDimension - 1)){
+                    coordenada_x--;
+                } if(coordenada_y == (antiguaDimension - 1)){
+                    coordenada_y--;
+                }
+            }
+            setInicioPieza(coordenada_x, coordenada_y);
+        }
+        tableroPresentacion.actualizarDimensiones(nuevasDimensiones);
     }
 
     /**
@@ -100,31 +88,24 @@ public class BTController implements IController {
 
     /**
      *
-     * @param dimension
-     * @param piezaSeleccionada
-     */
-    @Override
-    public void crearDominioTablero(int dimension, int piezaSeleccionada) {
-        this.tableroDominio = new Dominio.Tablero(dimension, piezaSeleccionada);
-    }
-
-    /**
-     *
      */
     @Override
     public void startBacktrackingProcess() {
-        recorridoEulerService.encontrarRecorridoEuleriano(tableroDominio);
+        procesoAcabado = false;
+        recorridoEulerService.start();
     }
 
-    /**
-     *
-     * @param mensaje
-     */
-    @Override
-    public void finalizacion(String mensaje){
-        this.inicioPiezaDefinido = false;
+    public void mostrarCaminoEuler(boolean hayRecorrido) {
+        procesoAcabado = true;
+        changes.firePropertyChange("procesoAcabado", false, true);
+        pintarTablero(); // Pintamos el tablero con las casillas actualizadas
+        mostrarDuracionEjecucion(); // Mostramos el tiempo total que ha tardado
         panelControl.ponerBotonReset();
-        ventana.UserMsg(mensaje);
+        if (hayRecorrido) {
+            ventana.UserMsg("Hemos encontrado una solución");
+        } else {
+            ventana.UserMsg("No hemos encontrado una solución");
+        }
     }
 
     /**
@@ -134,6 +115,7 @@ public class BTController implements IController {
     public void resetearTablero() {
         tableroDominio.resetearTablero();
         tableroPresentacion.quitarPieza();
+        this.inicioPiezaDefinido = false;
     }
 
     /**
@@ -183,6 +165,16 @@ public class BTController implements IController {
         panelControl.setTextoDuracionEjecucion(Long.toString(recorridoEulerService.getDuracionEjecucion()));
     }
 
+    @Override
+    public boolean dentroDeRango(int coordenada) {
+        return tableroDominio.dentroDeRango(coordenada);
+    }
+
+    @Override
+    public int cuadrarRangoEnTablero(int coordenada) {
+        return tableroDominio.cuadrarRango(coordenada);
+    }
+
     /**
      *
      */
@@ -198,4 +190,47 @@ public class BTController implements IController {
     public void modificarAccesoTablero() {
         tableroPresentacion.setTableroHabilitado(!tableroPresentacion.isTableroHabilitado());
     }
+
+    //region [GETTERS AND SETTERS]
+    public void setTableroPresentacion(Tablero tableroPresentacion) {
+        this.tableroPresentacion = tableroPresentacion;
+    }
+
+    public void setPiezaSeleccionada(int pieza){
+        try {
+            if (pieza != -1 && tableroDominio != null){
+                resetearTablero();
+                this.inicioPiezaDefinido = false;
+                tableroDominio.setClasePieza(piezasPath.concat(".").concat(PiezasTablero.values()[pieza].name()));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void setVentana(Ventana ventana) {
+        this.ventana = ventana;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public void setPanelControl(PanelControl panelControl) {
+        this.panelControl = panelControl;
+    }
+
+    public void setTableroDominio(Dominio.Tablero tableroDominio) {
+        this.tableroDominio = tableroDominio;
+    }
+
+    public boolean isInicioPiezaDefinido() {
+        return inicioPiezaDefinido;
+    }
+
+    public Dominio.Tablero getTableroDominio() { return tableroDominio; }
+
+    public boolean isProcesoAcabado() { return procesoAcabado; }
+
+    //endregion
 }

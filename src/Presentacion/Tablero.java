@@ -41,7 +41,6 @@ public class Tablero extends JPanel{
         this.setDoubleBuffered(true);
         this.font = font.deriveFont(Font.PLAIN, FONT_SIZE);
         this.controller = controller;
-        this.controller.crearDominioTablero(dimension, piezaSeleccionada);
         this.dimension = dimension;
         this.lado = (SIZE_PANEL - (BORDER_GAP * 2))/ dimension;
 
@@ -124,29 +123,10 @@ public class Tablero extends JPanel{
     /**
      * Método que sirve para redimensionar el tablero. Si ha
      * @param nuevaDimension
-     * @param decrementar
      */
-    public void actualizarDimensiones(int nuevaDimension, boolean decrementar){
-        int antiguaDimension = this.dimension;
+    public void actualizarDimensiones(int nuevaDimension){
         this.dimension = nuevaDimension;
         this.lado = (SIZE_PANEL - (BORDER_GAP * 2))/ nuevaDimension;
-        boolean modificado = false;
-        if (decrementar){
-            /* Si la pieza estaba puesta en los límites superiores del tablero y se quiere decrementar el tamaño,
-            se modifica la posición de la pieza
-            */
-            if (casilla_pieza_x  == (antiguaDimension - 1)){
-                casilla_pieza_x--;
-                modificado = true;
-            } if(casilla_pieza_y == (antiguaDimension - 1)){
-                casilla_pieza_y--;
-                modificado = true;
-            }
-            if (modificado){
-                // Si se ha modificado se tiene que actualizar la Casilla inicial de la Pieza
-                controller.setInicioPieza(casilla_pieza_x, casilla_pieza_y);
-            }
-        }
         //Repintamos para que aparezcan los cambios
         repaint();
     }
@@ -237,35 +217,13 @@ public class Tablero extends JPanel{
         }
 
         //Comprobamos que la coordenada está dentro de rango
-        if (!dentroDeRango(coordenada_casilla)){
-            return cuadrarRango(coordenada_casilla);
+        if (!controller.dentroDeRango(coordenada_casilla)){
+            return controller.cuadrarRangoEnTablero(coordenada_casilla);
         } else {
             return coordenada_casilla;
         }
     }
 
-    /**
-     * Sirve para saber si la coordenada está dentro del rango del tablero
-     * @param i
-     * @return
-     */
-    private boolean dentroDeRango(int i){
-        return (i <= dimension - 1) && i >= 0;
-    }
-
-    /**
-     * Método que sirve para cuadrar las coordenadas en caso de que se haga click fuera del tablero
-     * @param i
-     * @return
-     */
-    private int cuadrarRango(int i){
-        if (i < 0){
-            i = 0;
-        } else {
-            i = dimension - 1;
-        }
-        return i;
-    }
     //endregion
 
     //region [MÉTODOS PARA LAS PIEZAS]

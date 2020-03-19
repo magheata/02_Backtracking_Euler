@@ -3,9 +3,6 @@
  */
 package Dominio.Interfaz;
 
-import Dominio.Tablero;
-
-public interface IRecorridoEulerService {
-    void encontrarRecorridoEuleriano(Tablero tablero);
+public interface IRecorridoEulerService extends Runnable {
     void backtrackingEuler(int x, int y);
 }
