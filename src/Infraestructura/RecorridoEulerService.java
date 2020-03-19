@@ -101,5 +101,4 @@ public class RecorridoEulerService implements IRecorridoEulerService {
     public long getDuracionEjecucion() {
         return duracionEjecucion;
     }
-
 }

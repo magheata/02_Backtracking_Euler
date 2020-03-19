@@ -28,6 +28,8 @@ public class BTController implements IController {
     private Ventana ventana;
     private boolean inicioPiezaDefinido;
     private boolean procesoAcabado = true;
+
+    /* Sirve para añadir PropertyChangeListeners a las variables de esta clase */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     /**
