@@ -20,7 +20,6 @@ public class RecorridoEulerService implements IRecorridoEulerService {
     private long duracionEjecucion;
     private Thread worker;
 
-
     /**
      *
      * @param controller

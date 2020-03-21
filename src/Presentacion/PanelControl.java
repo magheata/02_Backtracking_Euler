@@ -88,45 +88,49 @@ public class PanelControl extends JPanel implements PropertyChangeListener {
         });
 
         startButton.addActionListener(e -> {
-            //Si el texto es Start se debe iniciar el proceso
-            if (startButton.getText().equals(LABEL_START_BTN)){
-                // Si la pieza está colocada se inicia el proceso
-                if (controller.isInicioPiezaDefinido()){
-                    // Se deshabilitan los botones de +/- dimension del tablero
-                    disableDimensionButtons();
-                    startButton.setEnabled(false);
-                    // Deshabilitamos los botones de las piezas
-                    controller.modificarAccesoBotones();
-                    // Deshabilitamos el tablero
-                    controller.modificarAccesoTablero();
-                    //Iniciamos el proceso de backtracking
-                    controller.startBacktrackingProcess();
-                    progressBar.setVisible(true);
-                    task = new Task();
-                    task.addPropertyChangeListener(this);
-                    task.execute();
-                } else {
-                    // En caso contrario se notifica al usuario de que falta la pieza
-                    controller.mostrarMensajeAlUsuario(MENSAJE_ERROR_PIEZAINICIO);
+            new Thread(() -> {
+                //Si el texto es Start se debe iniciar el proceso
+                if (startButton.getText().equals(LABEL_START_BTN)){
+                    // Si la pieza está colocada se inicia el proceso
+                    if (controller.isInicioPiezaDefinido()){
+                        // Se deshabilitan los botones de +/- dimension del tablero
+                        disableDimensionButtons();
+                        startButton.setEnabled(false);
+                        // Deshabilitamos los botones de las piezas
+                        controller.modificarAccesoBotones();
+                        // Deshabilitamos el tablero
+                        controller.modificarAccesoTablero();
+                        //Iniciamos el proceso de backtracking
+                        controller.startBacktrackingProcess();
+                        progressBar.setVisible(true);
+                        task = new Task();
+                        task.addPropertyChangeListener(this);
+                        task.execute();
+                    }
+                    else {
+                        // En caso contrario se notifica al usuario de que falta la pieza
+                        controller.mostrarMensajeAlUsuario(MENSAJE_ERROR_PIEZAINICIO);
+                    }
                 }
-            } else {
-                /* En caso contrario el texto es Restart, por lo que se deben resetear todas las variables de
-                * control y de interés */
-                startButton.setText(LABEL_START_BTN);
-                tiempoTardadoTextArea.setText("");
-                tiempoTardadoLabel.setVisible(false);
-                tiempoTardadoTextArea.setVisible(false);
+                else {
+                    /* En caso contrario el texto es Restart, por lo que se deben resetear todas las variables de
+                     * control y de interés */
+                    startButton.setText(LABEL_START_BTN);
+                    tiempoTardadoTextArea.setText("");
+                    tiempoTardadoLabel.setVisible(false);
+                    tiempoTardadoTextArea.setVisible(false);
 
-                // Se limpia el tablero
-                controller.resetearTablero();
-                // Se elimina la pieza seleccionada
-                controller.setPiezaSeleccionada(-1);
-                // Se habilitan los botones de las piezas y el tablero
-                controller.modificarAccesoBotones();
-                controller.modificarAccesoTablero();
-                // Se habilitan los botones de +/- del las dimensiones del tablero
-                enableDimensionButtons();
-            }
+                    // Se limpia el tablero
+                    controller.resetearTablero();
+                    // Se elimina la pieza seleccionada
+                    controller.setPiezaSeleccionada(-1);
+                    // Se habilitan los botones de las piezas y el tablero
+                    controller.modificarAccesoBotones();
+                    controller.modificarAccesoTablero();
+                    // Se habilitan los botones de +/- del las dimensiones del tablero
+                    enableDimensionButtons();
+                }
+            }).start();
         });
         //endregion
 

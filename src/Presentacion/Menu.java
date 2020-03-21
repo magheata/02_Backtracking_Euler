@@ -42,13 +42,15 @@ public class Menu extends JPanel {
             botones[i].setIcon(new javax.swing.ImageIcon(getClass().getResource(imagesPath.concat(botonesImg[i]))));
             botones[i].addActionListener(e -> {
                 Object source = e.getSource();
-                for (int j = 0; j < botones.length; j++) {
-                    if (botones[j] == source) {
-                        activarButton(j, botones[j]);
-                    } else {
-                        desactivarBoton(botones[j]);
+                new Thread(() -> {
+                    for (int j = 0; j < botones.length; j++) {
+                        if (botones[j] == source) {
+                            activarButton(j, botones[j]);
+                        } else {
+                            desactivarBoton(botones[j]);
+                        }
                     }
-                }
+                }).start();
             });
             this.add(botones[i]);
         }

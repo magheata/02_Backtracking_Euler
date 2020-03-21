@@ -7,10 +7,12 @@ import Dominio.Imagen;
 
 public interface IController {
     void setInicioPieza(int x, int y);
+    void mostrarCaminoEuler(boolean hayRecorrido);
     Imagen getImagenPiezaSeleccionada();
     void startBacktrackingProcess();
     void modificarAccesoBotones();
     void modificarAccesoTablero();
+    void modificarDimensionesTablero(int nuevasDimensiones, boolean decrementar);
     void resetearTablero();
     void pintarTablero();
     void mostrarMensajeAlUsuario(String s);

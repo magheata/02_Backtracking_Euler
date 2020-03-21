@@ -149,7 +149,7 @@
         <properties>
           <horizontalAlignment value="0"/>
           <requestFocusEnabled value="false"/>
-          <text value="3"/>
+          <text value="5"/>
         </properties>
       </component>
       <component id="da1b7" class="javax.swing.JButton" binding="incrDimensionButton">

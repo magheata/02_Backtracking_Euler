@@ -122,11 +122,15 @@ public class VentanaInicial extends JFrame{
         BTController controller = new BTController();
 
         //Creamos la ventana principal
-        Ventana m = new Ventana(controller, "Euler", Integer.parseInt(dimensionesTextField.getText()), selectedButton);
+        SwingUtilities.invokeLater(() -> {
+            Ventana m = new Ventana(controller, "Euler", Integer.parseInt(dimensionesTextField.getText()), selectedButton);
+            m.setVisible(true);
+            //window.pack();
+        });
+        //Creamos la ventana principal
 
         //Creamos el Tablero del Dominio (el Modelo)
         controller.setTableroDominio(new Tablero(Integer.parseInt(dimensionesTextField.getText()), selectedButton));
-        m.setVisible(true);
         this.setVisible(false);
     }
 

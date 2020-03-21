@@ -46,6 +46,7 @@ public class BTController implements IController {
      * @param nuevasDimensiones
      * @param decrementar
      */
+    @Override
     public void modificarDimensionesTablero(int nuevasDimensiones, boolean decrementar){
         int antiguaDimension = this.tableroDominio.getDimension();
         tableroDominio.setDimension(nuevasDimensiones);
@@ -97,16 +98,17 @@ public class BTController implements IController {
         recorridoEulerService.start();
     }
 
+    @Override
     public void mostrarCaminoEuler(boolean hayRecorrido) {
         procesoAcabado = true;
         changes.firePropertyChange("procesoAcabado", false, true);
-        pintarTablero(); // Pintamos el tablero con las casillas actualizadas
         mostrarDuracionEjecucion(); // Mostramos el tiempo total que ha tardado
         panelControl.ponerBotonReset();
         if (hayRecorrido) {
-            ventana.UserMsg("Hemos encontrado una solución");
+            pintarTablero(); // Pintamos el tablero con las casillas actualizadas
+            mostrarMensajeAlUsuario("Hemos encontrado una solución");
         } else {
-            ventana.UserMsg("No hemos encontrado una solución");
+            mostrarMensajeAlUsuario("No hemos encontrado una solución");
         }
     }
 

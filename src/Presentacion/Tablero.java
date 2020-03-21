@@ -47,14 +47,16 @@ public class Tablero extends JPanel{
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (tableroHabilitado){
-                    casilla_pieza_x = colocarEnCasilla((double) e.getX() / lado);
-                    casilla_pieza_y = colocarEnCasilla((double) e.getY() / lado);
-                    // Definimos la Casilla incial de la pieza que se ha colocado
-                    controller.setInicioPieza(casilla_pieza_x, casilla_pieza_y);
-                    // Repintamos el tablero para que aparezca dicha pieza
-                    repaint();
-                }
+                new Thread(() -> {
+                    if (tableroHabilitado){
+                        casilla_pieza_x = colocarEnCasilla((double) e.getX() / lado);
+                        casilla_pieza_y = colocarEnCasilla((double) e.getY() / lado);
+                        // Definimos la Casilla incial de la pieza que se ha colocado
+                        controller.setInicioPieza(casilla_pieza_x, casilla_pieza_y);
+                        // Repintamos el tablero para que aparezca dicha pieza
+                        repaint();
+                    }
+                }).start();
             }
             @Override
             public void mouseClicked(MouseEvent e) {}
@@ -98,7 +100,9 @@ public class Tablero extends JPanel{
         }
 
         // Se pinta el orden de visita de las casillas
-        pintarCasillasVisitadas();
+        new Thread(() -> {
+            pintarCasillasVisitadas();
+        }).start();
     }
 
     /**
@@ -156,9 +160,14 @@ public class Tablero extends JPanel{
                 /* Comprobamos si la casilla actual se ha visitado, en caso afirmativo se pinta el orden de visita dentro
                 de la casilla */
                 if (controller.isCasillaVisitada(i, j)){
-                    g2.drawString(String.valueOf(controller.getOrdenVisitadaCasilla(i, j)),
-                            i * lado + BORDER_GAP + (lado / 2) - (lado/ 4),
-                            j * lado + BORDER_GAP + (lado / 2) + (lado/ 4));
+                    // Runs inside of the Swing UI thread
+                    int finalI = i;
+                    int finalJ = j;
+                    SwingUtilities.invokeLater(() ->
+                            g2.drawString(String.valueOf(controller.getOrdenVisitadaCasilla(finalI, finalJ)),
+                            finalI * lado + BORDER_GAP + (lado / 2) - (lado/ 4),
+                            finalJ * lado + BORDER_GAP + (lado / 2) + (lado/ 4))
+                    );
                 }
             }
         }
@@ -245,5 +254,6 @@ public class Tablero extends JPanel{
         this.casilla_pieza_y = y;
         repaint();
     }
+
     //endregion
 }
