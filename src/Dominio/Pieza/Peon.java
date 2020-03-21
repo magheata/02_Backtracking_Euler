@@ -7,11 +7,7 @@ public class Peon extends Pieza{
     public Peon(){
         nombre = this.getClass().getName();
         imagen = new Imagen("src/Presentacion/Imagenes/peon77.png");
-        movx = new int[1];
-        movy = new int[1];
-        int pos = 0;
-        //Arriba
-        movx[pos] = 0;
-        movy[pos++] = 1;
+        movx = new int[]{0};
+        movy = new int[]{1};
     }
 }

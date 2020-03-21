@@ -6,11 +6,7 @@ public class DamaWhite extends Pieza{
     public DamaWhite(){
         nombre = this.getClass().getName();
         imagen = new Imagen("src/Presentacion/Imagenes/damaswhite77.png");
-        movx = new int[1];
-        movy = new int[1];
-        int pos = 0;
-        //Arriba
-        movx[pos] = 0;
-        movy[pos++] = 1;
+        movx = new int[]{2, -2, 2, -2, 0, 0, 1, -1};
+        movy = new int[]{2, 2, -2, -2, 1, -1, 0, 0};
     }
 }
