@@ -50,9 +50,11 @@ public class BTController implements IController {
     public void modificarDimensionesTablero(int nuevasDimensiones, boolean decrementar){
         int antiguaDimension = this.tableroDominio.getDimension();
         tableroDominio.setDimension(nuevasDimensiones);
+        int coordenada_x = -1;
+        int coordenada_y = -1;
         if (inicioPiezaDefinido){
-            int coordenada_x = tableroDominio.getInicioPieza().getX();
-            int coordenada_y = tableroDominio.getInicioPieza().getY();
+            coordenada_x = tableroDominio.getInicioPieza().getX();
+            coordenada_y = tableroDominio.getInicioPieza().getY();
             if (decrementar){
             /* Si la pieza estaba puesta en los límites superiores del tablero y se quiere decrementar el tamaño,
             se modifica la posición de la pieza
@@ -65,7 +67,7 @@ public class BTController implements IController {
             }
             setInicioPieza(coordenada_x, coordenada_y);
         }
-        tableroPresentacion.actualizarDimensiones(nuevasDimensiones);
+        tableroPresentacion.actualizarDimensiones(nuevasDimensiones, coordenada_x, coordenada_y);
     }
 
     /**

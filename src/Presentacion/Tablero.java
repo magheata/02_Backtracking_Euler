@@ -128,9 +128,14 @@ public class Tablero extends JPanel{
      * Método que sirve para redimensionar el tablero. Si ha
      * @param nuevaDimension
      */
-    public void actualizarDimensiones(int nuevaDimension){
+    public void actualizarDimensiones(int nuevaDimension, int x, int y){
         this.dimension = nuevaDimension;
         this.lado = (SIZE_PANEL - (BORDER_GAP * 2))/ nuevaDimension;
+        if (x != -1 && y != -1){
+            casilla_pieza_x = x;
+            casilla_pieza_y = y;
+        }
+
         //Repintamos para que aparezcan los cambios
         repaint();
     }

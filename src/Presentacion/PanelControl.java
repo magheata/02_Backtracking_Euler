@@ -75,7 +75,7 @@ public class PanelControl extends JPanel implements PropertyChangeListener {
             ButtonMasAgentesActionPerformed();
             //Si se ha modificado el tablero se notifica para que se pueda repintar
             if (dimensionModificada){
-                controller.modificarDimensionesTablero(dimension, true);
+                controller.modificarDimensionesTablero(dimension, false);
             }
         });
 
@@ -83,7 +83,7 @@ public class PanelControl extends JPanel implements PropertyChangeListener {
             ButtonMenosAgentesActionPerformed();
             //Si se ha modificado el tablero se notifica para que se pueda repintar
             if (dimensionModificada){
-                controller.modificarDimensionesTablero(dimension, false);
+                controller.modificarDimensionesTablero(dimension, true);
             }
         });
 
