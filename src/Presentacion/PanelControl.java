@@ -200,8 +200,8 @@ public class PanelControl extends JPanel implements PropertyChangeListener {
      * Desactivamos los botones de dimensión
      */
     private void disableDimensionButtons(){
-        incrDimensionButton.setEnabled(true);
-        decrDimensionButton.setEnabled(true);
+        incrDimensionButton.setEnabled(false);
+        decrDimensionButton.setEnabled(false);
     }
 
     @Override
